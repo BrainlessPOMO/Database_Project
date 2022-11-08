@@ -1,0 +1,34 @@
+Βουλδής Άγγελος ΑΜ:1059624 5ο Έτος
+
+
+-- Ερώτημα 1:
+
+delimiter //
+CREATE PROCEDURE filmCount24 (IN filmTitle24 VARCHAR(128), OUT count(*) INT)
+BEGIN
+    SELECT COUNT(*) INTO film24 FROM tvondemand.film
+    WHERE title24 = filmTitle24;
+END//
+delimiter ;
+
+-- Ερώτημα 2:
+
+delimiter //
+CREATE TRIGGER ins_film24 BEFORE INSERT ON film24
+       FOR EACH ROW
+       BEGIN
+            CALL filmCount24(NEW.title) = i
+            IF i = 1 THEN
+                INSERT INTO inventory24 (film_id24) VALUES
+                (NEW.film_id),
+                (NEW.film_id),
+                (NEW.film_id),
+                (NEW.film_id);
+            END IF;
+       END//
+delimiter ;
+
+
+-- Ερώτημα 3:
+-- Δεν μπορούσα να μπω στον mysql σερβερ (δεν είχα καταφέρει να μπω ποτέ ούτε απο κοντά)
+-- Αλλά το TRIGGER θα έπρεπε να τρέχει όταν κάνουμε insert στον πίνακα film και 
