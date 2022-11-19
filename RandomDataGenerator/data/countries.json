@@ -1,0 +1,110 @@
+[
+  {
+    "country": "Russia",
+    "cities": ["Moscow", "St. Petersburg", "Novosibirsk"]
+  },
+  {
+    "country": "Canada",
+    "cities": ["Toronto", "Montréal", "Vancouver"]
+  },
+  {
+    "country": "China",
+    "cities": ["Shanghai", "Beijing", "Tianjin"]
+  },
+  {
+    "country": "Brazil",
+    "cities": ["São Paulo", "Rio de Janeiro", "Brasilia"]
+  },
+  {
+    "country": "Australia",
+    "cities": ["Sydney", "Melbourne", "Brisbane"]
+  },
+  {
+    "country": "Indonesia",
+    "cities": ["Jakarta", "Surabaya", "Bandung"]
+  },
+  {
+    "country": "Argentina",
+    "cities": ["Buenos Aires", "Cordoba", "Rosario"]
+  },
+  {
+    "country": "Kazakhstan",
+    "cities": ["Almaty", "Nur-Sultan", "Shymkent"]
+  },
+  {
+    "country": "Algeria",
+    "cities": ["Algiers", "Oran", "Blida"]
+  },
+  {
+    "country": "Democratic Republic Of The Congo",
+    "cities": ["Kinshasa", "Lubumbashi", "Mbuji-Mayi"]
+  },
+  {
+    "country": "Greenland",
+    "cities": ["Nuuk", "Sisimiut", "Ilulissat"]
+  },
+  {
+    "country": "Saudi Arabia",
+    "cities": ["Riyadh", "Jeddah", "Mecca"]
+  },
+  {
+    "country": "Mexico",
+    "cities": ["Mexico City", "Ecatepec City", "Guadalajara City"]
+  },
+  {
+    "country": "Indonesia",
+    "cities": ["Jakarta", "Surabaya", "Bandung"]
+  },
+  {
+    "country": "Sudan",
+    "cities": ["Khartoum North", "Khartoum", "Omdurman"]
+  },
+  {
+    "country": "Libya",
+    "cities": ["Tripoli", "Benghazi", "Misrata"]
+  },
+  {
+    "country": "Iran",
+    "cities": ["Tehran", "Mashhad", "Isfahan"]
+  },
+  {
+    "country": "Mongolia",
+    "cities": ["Ulan Bator", "Erdenet", "Darkhan"]
+  },
+  {
+    "country": "Peru",
+    "cities": ["Lima", "Arequipa", "Trujillo"]
+  },
+  {
+    "country": "Angola",
+    "cities": ["Luanda", "Huambo", "Lobito"]
+  },
+  {
+    "country": "Mali",
+    "cities": ["Bamako", "Sikasso", "Kalabancoro"]
+  },
+  {
+    "country": "South Africa",
+    "cities": ["Johannesburg", "Cape Town", "Ethekwini"]
+  },
+  {
+    "country": "Colombia",
+    "cities": ["Bogota", "Medellin", "Cali"]
+  },
+  {
+    "country": "Ethiopia",
+    "cities": ["Addis Ababa", "Dire Dawa", "Mek'ele"]
+  },
+  {
+    "country": "Bolivia",
+    "cities": ["Santa Cruz De La Sierra", "La Paz", "El Alto"]
+  },
+  {
+    "country": "Mauritania",
+    "cities": ["Nouakchott", "Nouadhibou", "Néma"]
+  },
+  {
+    "country": "Egypt",
+    "cities": ["Cairo", "Alexandria", "Giza"]
+  }
+]

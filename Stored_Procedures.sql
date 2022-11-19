@@ -38,9 +38,9 @@ BEGIN
   	   			LIMIT 0, arithmos;
   		END IF;
 END$$
-
+DELIMITER ;
 -- ---------------------------------------------------------------------------
-
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `Procedure2`$$
 CREATE PROCEDURE `Procedure2` 
 (
@@ -48,12 +48,14 @@ CREATE PROCEDURE `Procedure2`
 	IN `Hmerominia` DATE
 )  
 BEGIN
-	SELECT COUNT (rental_id) AS Rentals
-	FROM rental
-	INNER JOIN user ON rental.user_id = user.user_id
+	SELECT COUNT(rental_id) AS Rentals
+	FROM `rental`
+	RIGHT JOIN `user` ON rental.user_id = user.user_id
 	WHERE user.email = email
-	and DATE(rental.rental_date) LIKE 'Hmerominia';
+	and DATE(rental.rental_date) LIKE Hmerominia;
 END$$
+DELIMITER ;
+
 --
 DROP PROCEDURE IF EXISTS Procedure3;
 delimiter $$
@@ -64,7 +66,7 @@ begin
     declare movie_count_both int;
     declare movie_count_movies int;
     declare episodes_count_both int;
-		declare episodes_count_series int;
+	declare episodes_count_series int;
     declare earnings float;
     set counter = 0;
     
@@ -147,9 +149,9 @@ begin
   end while; 
 
 end$$
-
+delimiter ;
 -- -----------------------------------------------------------------------------
-
+delimiter $$
 DROP PROCEDURE IF EXISTS `Procedure4`$$
 CREATE PROCEDURE `Procedure4` 
 (
@@ -164,7 +166,8 @@ BEGIN
 	WHERE last_name between concat(first_last_name, '%') and concat( end_last_name, '%')
 	ORDER BY last_name ASC;
 END$$
-
+delimiter ;
+delimiter $$
 DROP PROCEDURE IF EXISTS `Procedure5`$$
 CREATE PROCEDURE `Procedure5` (IN `last_name` VARCHAR(45))  BEGIN
 
@@ -177,22 +180,20 @@ CREATE PROCEDURE `Procedure5` (IN `last_name` VARCHAR(45))  BEGIN
 	select  `actor_id`, `first_name`, `last_name` from actor
 	where actor.last_name = last_name;
 END$$
+delimiter ;
 
+delimiter $$
 DROP PROCEDURE IF EXISTS `ProcedureEkptwsi`$$
-CREATE PROCEDURE `ProcedureEkptwsi` (IN `Username` VARCHAR(25), IN `Hmerominia` DATE)  BEGIN
-	SELECT COUNT (rental_id) AS Enoikiaseis
+CREATE PROCEDURE `ProcedureEkptwsi` (IN `ID` VARCHAR(25))  BEGIN
+	SELECT COUNT(rental_id) AS Enoikiaseis
 	FROM rental 
 	INNER JOIN user ON rental.user_id=user.user_id
-	WHERE rental.rental_date=CURRENT_TIMESTAMP
+	WHERE DATE(rental.rental_date) LIKE DATE(NOW()) and user.user_id = `ID`
 	GROUP BY user.email;
 IF Enoikiaseis>=3 THEN
 	SELECT amount FROM rental INNER JOIN payment
 	ON rental.rental_id=payment.rental_id;
   UPDATE payment.amount SET payment.amount=payment.default_price/2;
-  ELSE 
-	SELECT updated_amount FROM rental INNER JOIN payment
-  ON rental.rental_id=payment.rental_id;
-  UPDATE payment.amount SET payment.amount=payment.default_price;
 END IF;
 
 END$$

@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
   `log_id` int  NOT NULL AUTO_INCREMENT,
-  `user_id` int  NOT NULL,
+  `user_id` int,
   `modification_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_spec` enum('admin','employee','customer') CHARACTER SET utf8 DEFAULT 'customer',
   `action` enum('insert','update','delete') CHARACTER SET utf8 NOT NULL,
