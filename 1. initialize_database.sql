@@ -20,9 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `tvondemand`
 --
-DROP SCHEMA IF EXISTS tvondemand2;
-CREATE SCHEMA tvondemand2;
-USE tvondemand2;
+DROP SCHEMA IF EXISTS tvondemand;
+CREATE SCHEMA tvondemand;
+USE tvondemand;
 
 --
 -- Table structure for table `country`
@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `series` (
   `rating` enum('G','PG','PG-13','R','NC-17') DEFAULT 'G',
   `special_features` enum('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') DEFAULT NULL,
   `original_language_id` int  DEFAULT NULL,
+  `season_id` int,
   PRIMARY KEY (`series_id`),
   FOREIGN KEY (`language_id`) REFERENCES `language`(`language_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4;
@@ -267,24 +268,6 @@ CREATE TABLE IF NOT EXISTS `rental` (
   UNIQUE KEY `rental_date` (`rental_date`,`inventory_id`,`user_id`),
   FOREIGN KEY (`inventory_id`) REFERENCES `inventory`(`inventory_id`),
   FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16041 DEFAULT CHARSET=utf8mb4;
-
---
--- Table structure for table `price_list`
---
-DROP TABLE IF EXISTS `price_list`;
-CREATE TABLE IF NOT EXISTS `price_list` (
-  `price_list_id` int NOT NULL AUTO_INCREMENT,
-  `movie_prices` decimal(5,2) DEFAULT NULL,
-  `episode_prices` decimal(5,2) DEFAULT NULL,
-  `Both_prices` decimal(5,2) DEFAULT NULL,
-  `movie_id` int  NOT NULL,
-  `episode_id` int  NOT NULL,
-  `user_id` int  NOT NULL,
-  PRIMARY KEY (`price_list_id`),
-  FOREIGN KEY (`movie_id`) REFERENCES `movie`(`movie_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
-  FOREIGN KEY (`episode_id`) REFERENCES `episode`(`episode_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16041 DEFAULT CHARSET=utf8mb4;
 
 --

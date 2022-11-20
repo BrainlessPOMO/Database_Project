@@ -1,4 +1,4 @@
-USE tvondemand2;
+USE tvondemand;
 
 
 DELIMITER $$
@@ -45,14 +45,17 @@ DROP PROCEDURE IF EXISTS `Procedure2`$$
 CREATE PROCEDURE `Procedure2` 
 (
 	IN `email` VARCHAR(50),
-	IN `Hmerominia` DATE
+	IN `Hmerominia` DATE,
+    OUT `Rentals` INT
 )  
 BEGIN
-	SELECT COUNT(rental_id) AS Rentals
-	FROM `rental`
-	RIGHT JOIN `user` ON rental.user_id = user.user_id
-	WHERE user.email = email
-	and DATE(rental.rental_date) LIKE Hmerominia;
+	SET `Rentals`= (
+		SELECT COUNT(rental_id) AS Rentals
+		FROM `rental`
+		RIGHT JOIN `user` ON rental.user_id = user.user_id
+		WHERE user.email = email
+		and DATE(rental.rental_date) LIKE Hmerominia
+	);
 END$$
 DELIMITER ;
 
@@ -68,7 +71,24 @@ begin
     declare episodes_count_both int;
 	declare episodes_count_series int;
     declare earnings float;
+    
+    declare January_Earnings float;
+    declare February_Earnings float;
+    declare March_Earnings float;
+    declare April_Earnings float;
+    declare May_Earnings float;
+    declare June_Earnings float;
+    declare July_Earnings float;
+    declare August_Earnings float;
+    declare September_Earnings float;
+    declare October_Earnings float;
+    declare November_Earnings float;
+    declare December_Earnings float;
+    
+    
     set counter = 0;
+    
+
     
     while counter <= 12 do
 		-- movie_count_both = to noumero twn atomwn pou exoun enikiasei tainies, kai plhrwnoun 0.3 € ana tainia
@@ -119,35 +139,36 @@ begin
             
 		set earnings = movie_count_both * 0.3 + movie_count_movies * 0.4 + episodes_count_both * 0.1 + episodes_count_series * 0.2;
         
+        
         -- emfanizw ta apotelesmata se mhnes
         IF counter = 0 THEN
-			select earnings as January_Earnings;
+			set January_Earnings = (select earnings);
 		ELSEIF counter = 1 THEN
-			select earnings as February_Earnings;
+			set February_Earnings = (select earnings);
 		ELSEIF counter = 2 THEN
-			select earnings as March_Earnings;
+			set March_Earnings = (select earnings);
 		ELSEIF counter = 3 THEN
-			select earnings as April_Earnings;
+			set April_Earnings = (select earnings);
 		ELSEIF counter = 4 THEN
-			select earnings as May_Earnings;
+			set May_Earnings = (select earnings);
 		ELSEIF counter = 5 THEN
-			select earnings as June_Earnings;
+			set June_Earnings = (select earnings);
 		ELSEIF counter = 6 THEN
-			select earnings as July_Earnings;
+			set July_Earnings = (select earnings);
 		ELSEIF counter = 7 THEN
-			select earnings as August_Earnings;
+			set August_Earnings = (select earnings);
 		ELSEIF counter = 8 THEN
-			select earnings as September_Earnings;
+			set September_Earnings = (select earnings);
 		ELSEIF counter = 9 THEN
-			select earnings as October_Earnings;
+			set October_Earnings = (select earnings);
 		ELSEIF counter = 10 THEN
-			select earnings as November_Earnings;
+			set November_Earnings = (select earnings);
 		ELSEIF counter = 11 THEN
-			select earnings as December_Earnings;
+			set December_Earnings = (select earnings);
 		END IF;
 		set counter = counter + 1;
   end while; 
-
+	select January_Earnings, February_Earnings, March_Earnings, April_Earnings, May_Earnings, June_Earnings, July_Earnings, August_Earnings, September_Earnings, October_Earnings, November_Earnings, December_Earnings;
 end$$
 delimiter ;
 -- -----------------------------------------------------------------------------
@@ -182,20 +203,18 @@ CREATE PROCEDURE `Procedure5` (IN `last_name` VARCHAR(45))  BEGIN
 END$$
 delimiter ;
 
+-- ---------------------------------------
+-- elegxos gia ton typo eggrafhs tou xrhsth kai insert sto payment (prin ginei insert sto rental prepei na ginei insert sto payment)
 delimiter $$
-DROP PROCEDURE IF EXISTS `ProcedureEkptwsi`$$
-CREATE PROCEDURE `ProcedureEkptwsi` (IN `ID` VARCHAR(25))  BEGIN
-	SELECT COUNT(rental_id) AS Enoikiaseis
-	FROM rental 
-	INNER JOIN user ON rental.user_id=user.user_id
-	WHERE DATE(rental.rental_date) LIKE DATE(NOW()) and user.user_id = `ID`
-	GROUP BY user.email;
-IF Enoikiaseis>=3 THEN
-	SELECT amount FROM rental INNER JOIN payment
-	ON rental.rental_id=payment.rental_id;
-  UPDATE payment.amount SET payment.amount=payment.default_price/2;
-END IF;
-
+DROP PROCEDURE IF EXISTS `Proc_payment_after_rent_insert`$$
+CREATE PROCEDURE `Proc_payment_after_rent_insert` (IN `registration_type` enum('series','movies','both'), IN `discount` INT, IN `USER_ID` INT, IN `RENTAL_ID` INT , IN `date` datetime)
+BEGIN
+	IF `registration_type` = 'series' THEN
+		INSERT INTO payment(`user_id`, `rental_id`, `amount`, `payment_date`) VALUES(`USER_ID`, `RENTAL_ID`, 0.2/`discount`, `date`);
+	ELSEIF `registration_type` = 'movies' THEN
+		INSERT INTO payment(`user_id`, `rental_id`, `amount`, `payment_date`) VALUES(`USER_ID`, `RENTAL_ID`, 0.4/`discount`, `date`);
+	ELSE 
+		INSERT INTO payment(`user_id`, `rental_id`, `amount`, `payment_date`) VALUES(`USER_ID`, `RENTAL_ID`, 0.4/`discount`, `date`);
+	END IF;
 END$$
-
 DELIMITER ;
