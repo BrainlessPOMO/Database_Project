@@ -1,6 +1,4 @@
-# Baseis_Dedomenwn
-
-# Databases Project
+# Database Project
 
 This application is developed in the context of the project for the "Databases" course
 
